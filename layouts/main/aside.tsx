@@ -8,7 +8,6 @@ const Aside = () => {
     const { set_Aside, stateAside } = useLayout()
     let count = 0;
     const refAside = useClickOutside<View>(() => {
-
         if (stateAside && count == 1) {
             set_Aside(false)
             count = 0
@@ -21,6 +20,7 @@ const Aside = () => {
         x: 0,
         y: 0
     })).current
+
     useEffect(() => {
         if (stateAside) {
             Animated.timing(animationValue, {
@@ -28,15 +28,33 @@ const Aside = () => {
                     x: 250,
                     y: 0
                 },
-                duration: 200,
+                duration: 500,
                 useNativeDriver: false
             }).start()
+        } else {
+            if (stateAside) {
+                Animated.timing(new Animated.ValueXY({
+                    x: 250,
+                    y: 0
+                }), {
+                    toValue: {
+                        x: 0,
+                        y: 0
+                    },
+                    duration: 500,
+                    useNativeDriver: false
+                }).start()
+            }
+
         }
 
-    }, [animationValue, stateAside])
+    }, [stateAside, refAside])
     return (
-        <Animated.View style={[styles.frameAside, { width: stateAside ? animationValue.x : 0 }]} ref={refAside}>
-            <HeaderAside />
+        <Animated.View ref={refAside} style={[styles.frameAside, { width: stateAside ? animationValue.x : 0 }]}>
+            <View >
+                <HeaderAside />
+            </View>
+
         </Animated.View>
     );
 }

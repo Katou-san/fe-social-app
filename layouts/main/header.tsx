@@ -9,7 +9,6 @@ import { useLayout } from '@/contexts/providerLayout';
 
 const Header = () => {
     const { set_Aside, stateAside } = useLayout()
-
     return (
         <View style={styles.frameHeader}>
             <View style={styles.contentHeader}>
