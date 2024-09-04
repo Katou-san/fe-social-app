@@ -1,5 +1,6 @@
 import { padding } from '@/components/customs/styles';
 import IconCom from '@/components/IconComponent/iconCom';
+import FrameIconInMess from '@/components/message/@frameIconInMess';
 import BtnShare from '@/components/message/BtnShare';
 import EyeIcon_Fig from '@/icons/figma/Eye';
 import ShareIcon_Fig from '@/icons/figma/Share';
@@ -27,9 +28,7 @@ const MessText = ({ infoMess, currentUser }: Props) => {
                 <View >
                     <Text style={styles.NameTitle} >Name {infoMess}</Text>
                     <Text style={styles.Content}>Content message {infoMess} </Text>
-                    <View style={styles.frameIcons}>
-                        {listIcon.map((icon, i) => <IconCom key={i} active={i % 2 == 0} />)}
-                    </View>
+                    <FrameIconInMess />
                     <View style={styles.Footer}>
                         <View style={styles.Eye}>
                             <EyeIcon_Fig w={20} color='#B0B0B0' />

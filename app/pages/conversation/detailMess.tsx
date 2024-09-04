@@ -11,6 +11,7 @@ import { useNavigation } from "@react-navigation/native";
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import React, { useState } from "react";
 import {
+    Dimensions,
     StyleSheet,
     Text,
     TextInput,
@@ -22,6 +23,8 @@ import LayoutConversation from "@/components/conversation/layoutConversation";
 
 const DetailMess = () => {
     const navigation = useNavigation<NativeStackNavigationProp<RootStack>>();
+    const windowWidth = Dimensions.get('window').width;
+    const windowHeight = Dimensions.get('window').height;
     const [valueMessage, set_ValueMess] = useState<createMess_Type>(messageModel.init_create)
     const handleBack = () => {
         navigation.goBack();
@@ -35,7 +38,7 @@ const DetailMess = () => {
 
 
     return (
-        <View style={styles.frameConversitaion}>
+        <View style={[styles.frameConversitaion, { height: windowHeight }]}>
             <View style={styles.headerConver}>
                 <View style={styles.IconAndText}>
                     <TouchableOpacity onPress={handleBack}>
@@ -95,8 +98,6 @@ const styles = StyleSheet.create({
     frameConversitaion: {
         position: "relative",
         flexDirection: "column",
-        height: "100%",
-
     },
     headerConver: {
         position: "absolute",
@@ -140,6 +141,7 @@ const styles = StyleSheet.create({
     Body: {
         height: '100%',
         width: '100%',
+        // overflow: 'auto'
     },
     Footer: {
         position: "absolute",

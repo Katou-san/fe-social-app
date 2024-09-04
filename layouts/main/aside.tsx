@@ -7,19 +7,32 @@ import { useClickOutside } from 'react-native-click-outside';
 const Aside = () => {
     const { set_Aside, stateAside } = useLayout()
     let count = 0;
-    const refAside = useClickOutside<View>(() => {
-        if (stateAside && count == 1) {
-            set_Aside(false)
-            count = 0
-        } else {
-            count = 1;
-        }
-    });
+
 
     const animationValue = useRef(new Animated.ValueXY({
         x: 0,
         y: 0
     })).current
+
+    const resetPotion = () => {
+        Animated.timing(animationValue, {
+            toValue: {
+                x: 0,
+                y: 0
+            },
+            duration: 250,
+            useNativeDriver: false
+        }).start()
+
+        setTimeout(() => {
+            set_Aside(false)
+        }, 700)
+    }
+
+    const refAside = useClickOutside<View>(() => {
+        resetPotion()
+    });
+
 
     useEffect(() => {
         if (stateAside) {
@@ -28,29 +41,14 @@ const Aside = () => {
                     x: 250,
                     y: 0
                 },
-                duration: 500,
+                duration: 250,
                 useNativeDriver: false
             }).start()
-        } else {
-            if (stateAside) {
-                Animated.timing(new Animated.ValueXY({
-                    x: 250,
-                    y: 0
-                }), {
-                    toValue: {
-                        x: 0,
-                        y: 0
-                    },
-                    duration: 500,
-                    useNativeDriver: false
-                }).start()
-            }
-
         }
-
     }, [stateAside, refAside])
+
     return (
-        <Animated.View ref={refAside} style={[styles.frameAside, { width: stateAside ? animationValue.x : 0 }]}>
+        <Animated.View ref={refAside} style={[styles.frameAside, { width: animationValue.x }]}>
             <View >
                 <HeaderAside />
             </View>
